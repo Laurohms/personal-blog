@@ -8,3 +8,10 @@ build:
 run: build
 	@echo "starting api"
 	./bin/api
+
+docker_up: docker_down
+	systemctl start docker
+	sudo docker-compose up -d
+
+docker_down:
+	sudo docker-compose down
