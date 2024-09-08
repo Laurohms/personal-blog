@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"net/http"
 
+	"github.com/Laurohms/blog-api/internal/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,13 +13,13 @@ const (
 
 func main() {
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"ping": "pong",
-		})
-	})
 
-	err := r.Run(port)
+	err := routes.Start(r)
+	if err != nil {
+		log.Fatalf("Falha ao carregar as rotas: %v", err)
+	}
+
+	err = r.Run(port)
 	if err != nil {
 		log.Fatalf("error starting application: %v", err)
 	}
