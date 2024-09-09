@@ -10,7 +10,7 @@ run: build
 	./bin/api
 
 docker_up: docker_down
-	systemctl start docker
+	sudo systemctl start docker
 	sudo docker-compose up -d
 
 docker_down:
