@@ -1,8 +1,7 @@
 package routes
 
 import (
-	"net/http"
-
+	"github.com/Laurohms/blog-api/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,14 +10,10 @@ func Start(c *gin.Engine) error {
 	{
 		users := api.Group("/users")
 		{
-			users.GET("/", func(ctx *gin.Context) {
-				ctx.JSON(http.StatusOK, gin.H{
-					"ping": "kong",
-				})
-			})
+			users.GET("/", handlers.GetAllUsers)
 			users.GET("/name/:name")
-			users.GET("/:id")
-			users.POST("/")
+			users.GET("/:id", handlers.GetUserById)
+			users.POST("/", handlers.CreateUser)
 			users.PUT("/:id")
 			users.DELETE("/:id")
 		}
