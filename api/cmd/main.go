@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/Laurohms/blog-api/internal/config"
 	"github.com/Laurohms/blog-api/internal/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -16,6 +17,8 @@ const (
 )
 
 func main() {
+	config.InitDb()
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("fail loading .env file: %v", err)
