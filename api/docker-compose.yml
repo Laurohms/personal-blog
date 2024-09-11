@@ -1,12 +1,15 @@
 services:
   mysql:
-    image: mysql
+    image: mysql:8.0  # Especifique a versão do MySQL
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
     environment:
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=123456
-      - MYSQL_DATABASE=devdb
-      - MYSQL_ROOT_PASSWORD=123456
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: devdb
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

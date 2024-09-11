@@ -18,7 +18,7 @@ const (
 	DB_PORT     = "DB_PORT"
 )
 
-var db *sql.DB
+var DB *sql.DB
 
 func InitDb() {
 	err := godotenv.Load()
@@ -33,7 +33,7 @@ func InitDb() {
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbDatabase)
 
-	db, err = sql.Open("mysql", dsn)
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatalf("error connecting database: %v", err)
 	}
@@ -44,4 +44,24 @@ func InitDb() {
 
 	log.Println("Conexão bem-sucedida com o banco de dados!")
 
+	DB = db
+	createUsersTable()
+}
+
+func createUsersTable() {
+	query := `
+	CREATE TABLE IF NOT EXISTS users (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		username VARCHAR(50) NOT NULL,
+		password VARCHAR(255) NOT NULL,
+		role ENUM('BASIC', 'ADMIN') NOT NULL,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	);`
+
+	_, err := DB.Exec(query)
+	if err != nil {
+		log.Fatalf("erro ao criar a tabela users: %v", err)
+	} else {
+		log.Println("Tabela users verificada/criada com sucesso!")
+	}
 }
